@@ -1,0 +1,17 @@
+{
+  "name": "rlmafia",
+  "version": "1.0.0",
+  "description": "A rocket league mafia bot written with discord.js",
+  "main": "./src/bot.js",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/bot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
