@@ -1,4 +1,4 @@
-DISCORDJS_BOT_TOKEN=''
+DISCORDJS_BOT_TOKEN='';
 
 const { Client } = require('discord.js');
 const bot = new Client();
@@ -30,6 +30,28 @@ function nextRound(message) {
 		output += '<@' + players[i] + '>: ' + scores[i] + '\n';
 	}
 	message.channel.send(output);
+}
+
+function help(command) {
+	if (command === 'clear') {
+		return '!clear\n"Restarts" the game, clears all the players and scores out of memory.';
+	} else if (command === 'score'){
+		return '!score\nReplys with the current score of the player who used the command.';
+	} else if (command === 'leaderboard'){
+		return '!leaderboard\nReplys with the scores of all players in the game.';
+	} else if (command === 'join'){
+		return '!join\nAdds the user of the command to the game.';
+	} else if (command === 'vote'){
+		return '!vote {Player}\nCasts a vote for a player, used at the end of the Rocket League game. Must be @mentions to work properly.';
+	} else if (command === 'num-mafia'){
+		return '!num-mafia {Number}\nSets the number of mafia, the game cannot be start with a higher number of mafia than number of players.';
+	} else if (command === 'start'){
+		return '!start\nStarts the game by sending a direct message to everyone with their role.';
+	} else if (command === 'help') {
+		return '!help\nLists commands and descriptions or specific command if one is specified.'
+	} else {
+		return 'Command ' + PREFIX + command + ' not recognized';
+	}
 }
 
 bot.on('message', (message) => {
@@ -169,17 +191,23 @@ bot.on('message', (message) => {
 					for (var j = mafia.length - 1; j >= 0; j--) {
 						if (players[votedFor[i]] === players[mafia[j]] && !mafia.includes(i)) {
 							scores[i]++;
-							console.log('++');
 						}
 					}
 				}
 				nextRound(message);
 			}
 		} else if (cmd === 'help') {
-			message.reply('No help page created yet')
-		} else {
-			message.reply('That command is not recognized, list of available commands can be found by typing ' + PREFIX + 'help');
-		}
+			output = '```';
+			if (args[0] === undefined) {
+				output += '!clear\n"Restarts" the game, clears all the players and scores out of memory.\n!score\nReplys with the current score of the player who used the command.\n!leaderboard\nReplys with the scores of all players in the game.\n!join\nAdds the user of the command to the game.\n!vote {Player}\nCasts a vote for a player, used at the end of the Rocket League game. Must be @mentions to work properly.\n!num-mafia {Number}\nSets the number of mafia, the game cannot be start with a higher number of mafia than number of players.\n!start\nStarts the game by sending a direct message to everyone with their role.\n!help {command}\nLists commands and descriptions or specific command if one is specified.';
+			} else {
+				for (var i = 0; i < args.length; i++) {
+					output += help(args[i]) + '\n';
+				}
+			}
+			output += '```';
+			message.channel.send(output);
+		} 
 	}
 });
 
