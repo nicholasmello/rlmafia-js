@@ -25,6 +25,6 @@ Lists commands and descriptions or specific command if one is specified.
 * node.js
 * A discord account
 ## Setup
-Add discord bot token to first line of bot.js
+* Add discord bot token to first line of bot.js
 * Run `npm install discord.js` inside of the directory with the mafia bot
 * Start the bot with `npm run start`
