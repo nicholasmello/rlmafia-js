@@ -7,6 +7,8 @@ If you are just looking to play the bot and not host it yourself you can click o
 ## Commands
 ### !clear
 "Restarts" the game, clears all the players and scores out of memory.
+### !winner {Player} {Player} {Player}
+Lists the 3 players who won the rocket league game, must be @messages
 ### !score
 Replys with the current score of the player who used the command.
 ### !leaderboard
