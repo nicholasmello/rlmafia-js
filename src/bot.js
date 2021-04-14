@@ -48,7 +48,9 @@ function help(command) {
 	} else if (command === 'start'){
 		return '!start\nStarts the game by sending a direct message to everyone with their role.';
 	} else if (command === 'help') {
-		return '!help\nLists commands and descriptions or specific command if one is specified.'
+		return '!help\nLists commands and descriptions or specific command if one is specified.';
+	} else if (command === 'winner'){
+		return '!winner {Player} {Player} {Player}\nLists the 3 players who won the rocket league game, must be @messages';
 	} else {
 		return 'Command ' + PREFIX + command + ' not recognized';
 	}
@@ -191,15 +193,23 @@ bot.on('message', (message) => {
 					for (var j = mafia.length - 1; j >= 0; j--) {
 						if (players[votedFor[i]] === players[mafia[j]] && !mafia.includes(i)) {
 							scores[i]++;
+							var argsshort = [];
+							for (var k = args.length - 1; k >= 0; k--) {
+								argsshort[k] = args[k].substring(3,21);
+							}
+							if (argsshort.includes(players[i])) {
+								scores[i]++;
+							}
 						}
 					}
 				}
+
 				nextRound(message);
 			}
 		} else if (cmd === 'help') {
 			output = '```';
 			if (args[0] === undefined) {
-				output += '!clear\n"Restarts" the game, clears all the players and scores out of memory.\n!score\nReplys with the current score of the player who used the command.\n!leaderboard\nReplys with the scores of all players in the game.\n!join\nAdds the user of the command to the game.\n!vote {Player}\nCasts a vote for a player, used at the end of the Rocket League game. Must be @mentions to work properly.\n!num-mafia {Number}\nSets the number of mafia, the game cannot be start with a higher number of mafia than number of players.\n!start\nStarts the game by sending a direct message to everyone with their role.\n!help {command}\nLists commands and descriptions or specific command if one is specified.';
+				output += '!clear\n"Restarts" the game, clears all the players and scores out of memory.\n!winner {Player} {Player} {Player}\nLists the 3 players who won the rocket league game, must be @messages\n!score\nReplys with the current score of the player who used the command.\n!leaderboard\nReplys with the scores of all players in the game.\n!join\nAdds the user of the command to the game.\n!vote {Player}\nCasts a vote for a player, used at the end of the Rocket League game. Must be @mentions to work properly.\n!num-mafia {Number}\nSets the number of mafia, the game cannot be start with a higher number of mafia than number of players.\n!start\nStarts the game by sending a direct message to everyone with their role.\n!help {command}\nLists commands and descriptions or specific command if one is specified.';
 			} else {
 				for (var i = 0; i < args.length; i++) {
 					output += help(args[i]) + '\n';
